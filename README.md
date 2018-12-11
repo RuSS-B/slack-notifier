@@ -53,6 +53,12 @@ monolog:
       id: SlackNotifier\Handler\Handler
 ```
 
+And make sure to add this line to your `services.yaml` file
+
+```
+SlackNotifier\Handler\Handler:
+```
+
 ## Full list of Hook urls
 ```
 SLACK_NOTIFIER_EMERGENCY_HOOK
