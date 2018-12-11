@@ -13,7 +13,7 @@ class Config
         $levels = Logger::getLevels();
 
         foreach ($levels as $levelName => $level) {
-            $this->levels[$level] = getenv("SLACK_NOTIFIER_{$levelName}_HOOK") ?? self::getDefaultHookUrl();
+            $this->levels[$level] = getenv("SLACK_NOTIFIER_{$levelName}_HOOK") ?: self::getDefaultHookUrl();
         }
     }
 

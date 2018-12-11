@@ -8,6 +8,9 @@ use Monolog\Logger;
 use SlackNotifier\Entry\CriticalEntry;
 use SlackNotifier\Entry\DefaultEntry;
 use SlackNotifier\Entry\EntryInterface;
+use SlackNotifier\Entry\ErrorEntry;
+use SlackNotifier\Entry\InfoEntry;
+use SlackNotifier\Entry\WarningEntry;
 use SlackNotifier\Record;
 use SlackNotifier\Transport;
 
@@ -49,6 +52,15 @@ class Handler extends AbstractHandler
         switch ($record->getLevel()) {
             case Logger::CRITICAL :
                 $entry = new CriticalEntry($record);
+                break;
+            case Logger::ERROR :
+                $entry = new ErrorEntry($record);
+                break;
+            case Logger::WARNING :
+                $entry = new WarningEntry($record);
+                break;
+            case Logger::INFO :
+                $entry = new InfoEntry($record);
                 break;
             default :
                 $entry = new DefaultEntry($record);
