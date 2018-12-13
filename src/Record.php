@@ -106,7 +106,7 @@ class Record
      */
     public function getAttachments() : array
     {
-        return $this->record['context']['attachments'] ?? [];
+        return $this->getFromContext('attachments') ?? [];
     }
 
     /**
@@ -114,7 +114,7 @@ class Record
      */
     public function getFields() : array
     {
-        return $this->record['context']['fields'] ?? [];
+        return $this->getFromContext('fields') ?? [];
     }
 
     /**
@@ -122,12 +122,22 @@ class Record
      */
     public function getEntryType() :? string
     {
-        return $this->record['context']['entryType'] ?? null;
+        return $this->getFromContext('entryType');
     }
 
     public function getContext() : array
     {
         return $this->record['context'];
+    }
+
+    /**
+     * @param $key
+     *
+     * @return mixed|null
+     */
+    public function getFromContext(string $key)
+    {
+        return $this->record['context'][$key] ?? null;
     }
 
     /**
@@ -143,7 +153,9 @@ class Record
      */
     public function hasException() : bool
     {
-        return isset($this->record['context']['exception']) && $this->record['context']['exception'] instanceof \Exception;
+        $e = $this->getFromContext('exception');
+
+        return $e && $e instanceof \Exception;
     }
 
     /**
@@ -151,6 +163,6 @@ class Record
      */
     public function getException() : \Exception
     {
-        return $this->record['context']['exception'];
+        return $this->getFromContext('exception');
     }
 }

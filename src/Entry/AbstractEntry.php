@@ -95,9 +95,8 @@ abstract class AbstractEntry implements EntryInterface, \JsonSerializable
     {
         $attachment = new Attachment($this->getColor());
 
-        $attachment->addField(new Field('Message', $this->record->getMessage()));
-
         if (!$this->record->isConsole()) {
+            $attachment->addField(new Field('Message', $this->record->getMessage()));
             $attachment->addField(new Field('Request URL', $this->record->getRequestUrl(), true));
             $attachment->addField(new Field('Request Method', $this->record->getRequestMethod(), true));
 
@@ -110,7 +109,11 @@ abstract class AbstractEntry implements EntryInterface, \JsonSerializable
             }
 
         } else {
-            //@todo add console command name
+            $command = $this->record->getFromContext('command');
+            $errMsg  = $this->record->getFromContext('message');
+            $message = str_replace(['{command}', '{message}'], [$command, $errMsg], $this->record->getMessage());
+
+            $attachment->addField(new Field('Message', $message));
         }
 
         $this->addAttachment($attachment);
