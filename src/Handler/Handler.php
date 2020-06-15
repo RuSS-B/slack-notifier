@@ -21,16 +21,27 @@ class Handler extends AbstractHandler
      */
     private $transport;
 
-    public function __construct($level = Logger::WARNING, $bubble = true)
+    private $config;
+
+    public function __construct($level = Logger::WARNING, $bubble = true, array $config = [])
     {
         parent::__construct($level, $bubble);
 
+        $this->config = $config;
         $this->transport = new Transport();
     }
 
     public function handle(array $record)
     {
         $record = new Record($record);
+
+        if (isset($this->config['skipHttpCodes']) && is_array($this->config['skipHttpCodes'])) {
+            $statusCode = $record->getHttpStatusCode();
+
+            if (in_array($statusCode, $this->config['skipHttpCodes'])) {
+                return null;
+            }
+        }
 
         if (!$record->isDefaultEntry()) {
             $instance = $record->getEntryType();
