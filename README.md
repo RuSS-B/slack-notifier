@@ -59,6 +59,14 @@ And make sure to add this line to your `services.yaml` file
 SlackNotifier\Handler\Handler:
 ```
 
+in case you want to skip some http status codes it can be achived this way
+
+```
+    SlackNotifier\Handler\Handler:
+        arguments:
+            $config: {'skipHttpCodes' : [404, 405]}
+```
+
 ## Full list of Hook urls
 ```
 SLACK_NOTIFIER_EMERGENCY_HOOK
