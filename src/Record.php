@@ -4,6 +4,7 @@ namespace SlackNotifier;
 
 use Symfony\Component\HttpFoundation\Request;
 use Monolog\Logger;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Record
 {
@@ -164,5 +165,20 @@ class Record
     public function getException() : \Exception
     {
         return $this->getFromContext('exception');
+    }
+
+    public function getHttpStatusCode(): ?int
+    {
+        if (false === $this->hasException()) {
+            return null;
+        }
+
+        $e = $this->getException();
+
+        if ($e instanceof HttpException) {
+            return $e->getStatusCode();
+        }
+
+        return null;
     }
 }
