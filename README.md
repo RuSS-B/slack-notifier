@@ -18,7 +18,7 @@ A full list of ENV's is [here](#full-list-of-hook-urls)
 ## Basic Usage
 ```
 $logger = new Monolog\Logger('default', [new \SlackNotifier\Handler\Handler()]);
-$log->error('Some error goes here!')
+$log->error('Some error goes here!');
 ```
 
 ### Adding attachments manually
