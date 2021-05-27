@@ -51,6 +51,8 @@ class Handler extends AbstractHandler
         }
 
         $this->transport->addEntry($entry);
+        
+        return true;
     }
 
     /**
