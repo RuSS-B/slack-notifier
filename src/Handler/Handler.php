@@ -23,7 +23,7 @@ class Handler extends AbstractHandler
 
     private $config;
 
-    public function __construct($level = Logger::DEBUG, bool $bubble = true)
+    public function __construct($level = Logger::DEBUG, bool $bubble = true, array $config = [])
     {
         parent::__construct($level, $bubble);
 
