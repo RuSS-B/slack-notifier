@@ -23,7 +23,7 @@ class Handler extends AbstractHandler
 
     private $config;
 
-    public function __construct($level = Logger::WARNING, $bubble = true, array $config = [])
+    public function __construct($level = Logger::DEBUG, bool $bubble = true)
     {
         parent::__construct($level, $bubble);
 
@@ -31,7 +31,7 @@ class Handler extends AbstractHandler
         $this->transport = new Transport();
     }
 
-    public function handle(array $record)
+    public function handle(array $record): bool
     {
         $record = new Record($record);
 
@@ -39,7 +39,7 @@ class Handler extends AbstractHandler
             $statusCode = $record->getHttpStatusCode();
 
             if (in_array($statusCode, $this->config['skipHttpCodes'])) {
-                return null;
+                return false;
             }
         }
 
