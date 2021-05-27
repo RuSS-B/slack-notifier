@@ -80,7 +80,7 @@ class Handler extends AbstractHandler
         return $entry;
     }
 
-    public function close()
+    public function close(): void
     {
         parent::close();
         $this->transport->send();
